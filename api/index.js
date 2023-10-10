@@ -2,6 +2,7 @@ import express from "express"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
 import userRouter from "./routes/user.js"
+import authRouter from "./routes/auth.js"
 dotenv.config()
 
 
@@ -14,6 +15,7 @@ const app = express()
 app.listen(4000, ()=>{
     console.log("Server is running on port 4000")
 })
+app.use(express.json())
 
 // Below para is the basic way of API Routing
 app.get('/test', (req,res)=>{
@@ -26,3 +28,4 @@ app.get('/test', (req,res)=>{
 // Below para is the advanced way of API
 
 app.use("/api/user", userRouter)
+app.use("/api/auth", authRouter)
