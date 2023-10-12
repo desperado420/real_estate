@@ -1,5 +1,7 @@
 import User from "../models/user.js"
 import bcryptjs from "bcryptjs"
+import {errorHandler} from "../utils/error.js"
+import jwt from "jsonwebtoken"
 
 export const signup = async(req,res,next) => {
     const {username, email, password} = req.body
@@ -29,4 +31,45 @@ export const signup = async(req,res,next) => {
         next(error)
     }
 
+}
+
+export const signin = async(req,res,next) => {
+    const {email, password} = req.body
+
+    try{
+        const user = await User.findOne({email:email})
+        if(!user){
+            return next(errorHandler(404, 'User not found'))
+        }
+
+        const validPassword = bcryptjs.compareSync(password, user.password)
+        if(!validPassword){
+            return next(errorHandler(401, "Wrong password"))
+
+        }
+
+        const payload={
+            id:user._id,
+            email:user.email
+        }
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn:"2h"
+        })
+        user.toObject()
+        user.token=token
+        user.password=undefined
+        res.cookie("access_token", token, {
+            httpOnly:true,
+            expires:new Date(Date.now()+2*60*60*1000)
+        })
+        .status(200)
+        .json({
+            success:true,
+            message:"User logged in successfully",
+            user
+        })
+
+    } catch(error){
+        next(error)
+    }
 }
