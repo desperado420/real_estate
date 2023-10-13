@@ -64,8 +64,6 @@ export const signin = async(req,res,next) => {
         })
         .status(200)
         .json({
-            success:true,
-            message:"User logged in successfully",
             user
         })
 
