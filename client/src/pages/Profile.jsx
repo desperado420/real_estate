@@ -1,7 +1,11 @@
+import { useSelector } from "react-redux/es/hooks/useSelector"
 
 function Profile() {
+  const {currentUser} = useSelector((state)=>state.user)
   return (
-    <div>Profile</div>
+    <div>
+      Hi {currentUser.username}
+    </div>
   )
 }
 
