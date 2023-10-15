@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import dotenv from "dotenv"
 import userRouter from "./routes/user.js"
 import authRouter from "./routes/auth.js"
+import cookieParser from "cookie-parser"
 dotenv.config()
 
 
@@ -16,6 +17,7 @@ app.listen(4000, ()=>{
     console.log("Server is running on port 4000")
 })
 app.use(express.json())
+app.use(cookieParser())
 
 // Below para is the basic way of API Routing
 app.get('/test', (req,res)=>{
