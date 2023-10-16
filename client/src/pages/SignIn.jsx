@@ -31,7 +31,6 @@ function SignIn() {
         dispatch(signInFailure(data.message))
         return
       }
-      console.log(data)
       dispatch(signInSuccess(data.user))
       navigate('/')
     } catch(error){
