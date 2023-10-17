@@ -1,6 +1,7 @@
 import bcryptjs from "bcryptjs"
 import User from "../models/user.js"
 import {errorHandler} from "../utils/error.js"
+import Listing from "../models/listing.js"
 
 export const test = (req,res) => {
     res.json({
@@ -48,6 +49,18 @@ export const deleteUser = async(req,res,next) => {
             success:true,
             message:"User deleted successfully"
         })
+    } catch(error){
+        next(error)
+    }
+}
+
+export const getUserListings = async(req, res, next) => {
+    if(req.user.id !== req.params.id){
+        return next(errorHandler(401, "You can fetch listings of only your own account"))
+    }
+    try{
+        const listings = await Listing.find({userRef:req.user.id})
+        res.status(200).json(listings)
     } catch(error){
         next(error)
     }
