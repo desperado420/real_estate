@@ -26,21 +26,22 @@ function Profile() {
     const fileName = new Date().getTime() + file.name
     const storageRef = ref(storage, fileName) 
     const uploadTask = uploadBytesResumable(storageRef, file)
-    uploadTask.on("state_changed", 
+    uploadTask.on(
+      "state_changed", 
       (snapshot) => {
         const progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100
         setFilePerc(Math.round(progress))
       },  
     
-    (error)=>{
-      setFileUploadError(true)
-    },
-    ()=>{
-      getDownloadURL(uploadTask.snapshot.ref)
-      .then((downloadURL)=>{
-        setFormData({...formData, avatar:downloadURL})
-      }) 
-    }
+      (error)=>{
+        setFileUploadError(true)
+      },
+      ()=>{
+        getDownloadURL(uploadTask.snapshot.ref)
+        .then((downloadURL)=>{
+          setFormData({...formData, avatar:downloadURL})
+        }) 
+      }
     )
   }
 
