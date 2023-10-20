@@ -19,26 +19,30 @@ function Listing() {
   
     const { currentUser } = useSelector((state) => state.user);
     
-    const fetchListing = async() => {
-        try{
-            setLoading(true)
-            const res = await fetch(`/api/listing/getListing/${id}`)
-            const data = await res.json()
-            if(data.success===false) {
+    
+    useEffect(()=>{
+        const fetchlisting = async() => {
+            try{
+                setLoading(true)
+                console.log(id)
+                const res = await fetch(`/api/listing/getlisting/${id}`)
+                const data = await res.json()
+                if(data.success===false) {
+                    setError(true)
+                    setLoading(false)
+                    return
+                } 
+                setListing(data)
+                console.log(data)
+                console.log(listing)
+                setLoading(false)
+            } catch(error) {
                 setError(true)
                 setLoading(false)
-                return
-            } 
-            setListing(data)
-            setLoading(false)
-        } catch(error){
-            setError(true)
-            setLoading(false)
+            }
+            
         }
-        
-    }
-    useEffect(()=>{
-        fetchListing()
+        fetchlisting()
     },[id])
 
   return (
@@ -73,13 +77,13 @@ function Listing() {
                     Link copied!
                     </p>
                 )}
-                <div className='flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4'>
+                <div>
                     <p className='text-2xl font-semibold'>
-                    {listing.name} - ${' '}
-                    {listing.offer
-                        ? listing.discountPrice.toLocaleString('en-US')
-                        : listing.regularPrice.toLocaleString('en-US')}
-                    {listing.type === 'rent' && ' / month'}
+                        {listing.name} - ${' '}
+                        {listing.offer
+                            ? listing.discountedPrice.toLocaleString('en-US')
+                            : listing.regularPrice.toLocaleString('en-US')}
+                        {listing.type === 'rent' && ' / month'}
                     </p>
                     <p className='flex items-center mt-6 gap-2 text-slate-600  text-sm'>
                     <FaMapMarkerAlt className='text-green-700' />
@@ -91,7 +95,7 @@ function Listing() {
                     </p>
                     {listing.offer && (
                         <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                        ${+listing.regularPrice - +listing.discountPrice} OFF
+                        ${+listing.regularPrice - +listing.discountedPrice} OFF
                         </p>
                     )}
                     </div>
@@ -121,7 +125,6 @@ function Listing() {
                         {listing.furnished ? 'Furnished' : 'Unfurnished'}
                     </li>
                     </ul>
-                    
                 </div>
             </div>
         )}
