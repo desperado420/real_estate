@@ -25,7 +25,6 @@ function Listing() {
         const fetchlisting = async() => {
             try{
                 setLoading(true)
-                console.log(id)
                 const res = await fetch(`/api/listing/getlisting/${id}`)
                 const data = await res.json()
                 if(data.success===false) {
@@ -34,8 +33,6 @@ function Listing() {
                     return
                 } 
                 setListing(data)
-                console.log(data)
-                console.log(listing)
                 setLoading(false)
             } catch(error) {
                 setError(true)
