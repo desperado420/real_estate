@@ -6,6 +6,7 @@ import {Navigation} from "swiper/modules"
 import "swiper/css/bundle"
 import {FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaShare} from "react-icons/fa"
 import { useSelector } from 'react-redux'
+import Contact from '../components/Contact'
 
 
 function Listing() {
@@ -77,7 +78,7 @@ function Listing() {
                     Link copied!
                     </p>
                 )}
-                <div>
+                <div className='gap-y-4'>
                     <p className='text-2xl font-semibold'>
                         {listing.name} - ${' '}
                         {listing.offer
@@ -125,7 +126,15 @@ function Listing() {
                         {listing.furnished ? 'Furnished' : 'Unfurnished'}
                     </li>
                     </ul>
+                    {currentUser && listing.userRef !== currentUser._id && !contact && (
+                        <button onClick={()=>setContact(true)} className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'>
+                            Contact Landlord
+                        </button>
+                    )}
+                    {contact && <Contact listing={listing} />}
                 </div>
+                
+                
             </div>
         )}
     </main>
