@@ -77,10 +77,17 @@ function Search() {
         }
 
         const fetchListings = async() => {
+            setShowMore(false)
             setLoading(true)
             const searchQuery = urlParams.toString()
             const res  = await fetch(`/api/listing/get?${searchQuery}`)
             const data = await res.json()
+            if(data.length > 8){
+                setShowMore(true)
+            }
+            else{
+                setShowMore(false)
+            }
             setListings(data)
             setLoading(false)
         }
@@ -194,11 +201,15 @@ function Search() {
                 <ListingItem key={listing._id} listing={listing} />
             ))}
 
-            {showMore && (
-                <button onClick={onShowMoreClick} className="text-green-700 hover:underline p-7 text-center w-full">
-                    Show More
-                </button>
-            )}
+            {
+            showMore 
+            && 
+            (
+                    <button onClick={onShowMoreClick} className="text-green-700 hover:underline p-7 text-center w-full">
+                        Show More
+                    </button>
+            )
+            }
 
             </div>
         </div>
