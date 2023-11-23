@@ -77,7 +77,7 @@ function Listing() {
                 )}
                 <div className='gap-y-4'>
                     <p className='text-2xl font-semibold'>
-                        {listing.name} - ${' '}
+                        {listing.name} - ₹{' '}
                         {listing.offer
                             ? listing.discountedPrice.toLocaleString('en-US')
                             : listing.regularPrice.toLocaleString('en-US')}
@@ -93,7 +93,7 @@ function Listing() {
                     </p>
                     {listing.offer && (
                         <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                        ${+listing.regularPrice - +listing.discountedPrice} OFF
+                        ₹{+listing.regularPrice - +listing.discountedPrice} OFF
                         </p>
                     )}
                     </div>

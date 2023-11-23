@@ -181,7 +181,7 @@ function CreateListing() {
                         <input  onChange={handleChange} value={formData.regularPrice} className="p-3 border border-gray-300 rounded-lg" type="number" id="regularPrice" required />
                         <div className="flex flex-col items-center">
                             <p>Regular Price</p>
-                            <span className="text-xs">($/month)</span>
+                            <span className="text-xs">(₹/month)</span>
                         </div>
                     </div>
 
@@ -189,7 +189,7 @@ function CreateListing() {
                         <input onChange={handleChange} value={formData.discountedPrice} className="p-3 border border-gray-300 rounded-lg" type="number" id="discountedPrice" required />
                         <div className="flex flex-col items-center">
                             <p>Discounted Price</p>
-                            <span className="text-xs">($/month)</span>
+                            <span className="text-xs">(₹/month)</span>
                         </div>
                     </div>}
                 </div>
